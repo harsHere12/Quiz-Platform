@@ -1,0 +1,29 @@
+version: '3'
+services:
+  quizApp :
+    image: 'quiz-app-image:latest'
+    build:
+      context: .
+    container_name: quiz-app
+    depends_on:
+      - db
+    environment:
+      - spring.datasource.url=jdbc:postgresql://localhost:9080/managements
+      - spring.datasource.username=postgres
+      - spring.datasource.password=postgres
+      - spring.jpa.hibernate.ddl-auto=update
+    ports:
+      - "6000:8080"
+
+
+  db :
+    image: 'postgres:15.1'
+    container_name: quiz-app-db
+    environment:
+      POSTGRES_USER : postgres
+      POSTGRES_PASSWORD : postgres
+
+
+
+    ports:
+      - "9080:5432"
